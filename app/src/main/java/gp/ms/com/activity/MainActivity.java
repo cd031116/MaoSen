@@ -1,5 +1,4 @@
 package gp.ms.com.activity;
-
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
 import gp.ms.com.fragment.HomeFragment;
@@ -28,7 +26,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StatusBarUtil.setTransparent(this);
+        StatusBarUtil.setColor(this,Color.parseColor("#d81e06"),0);
         super.onCreate(savedInstanceState);
     }
 
