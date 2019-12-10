@@ -1,9 +1,10 @@
-package gp.ms.com.ui;
+package gp.ms.com.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import gp.ms.com.maosen.R;
+import gp.ms.com.R;
+
 
 public class MainActivity extends AppCompatActivity {
 
