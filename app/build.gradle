@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "gp.ms.com.maosen"
+        applicationId "gp.ms.com"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
