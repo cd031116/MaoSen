@@ -15,16 +15,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //是否需要保持常亮
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Window window = getWindow();
-        //隐藏标题栏
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //隐藏状态栏
-        //定义全屏参数
-        int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        //设置当前窗体为全屏显示
-        window.setFlags(flag, flag);
         AppManager.getAppManager().addActivity(this);
         setContentView(setLayout());
         initView();

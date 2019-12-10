@@ -4,6 +4,8 @@
     android:id="@+id/bottom_l"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:paddingBottom="@dimen/dp_2"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -16,8 +18,8 @@
 
         <ImageButton
             android:id="@+id/home_ima"
-            android:layout_width="@dimen/dp_70"
-            android:layout_height="@dimen/dp_70"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:background="@drawable/home_icon_bg"/>
 
         <TextView
@@ -42,8 +44,8 @@
 
         <ImageButton
             android:id="@+id/my_ima"
-            android:layout_width="@dimen/dp_70"
-            android:layout_height="@dimen/dp_70"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:background="@drawable/my_icon_bg"/>
         <TextView
             android:id="@+id/my_t"

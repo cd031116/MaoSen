@@ -14,6 +14,7 @@ import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
 import gp.ms.com.fragment.HomeFragment;
 import gp.ms.com.fragment.MyFragment;
+import gp.ms.com.utils.StatusBarUtil;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
@@ -27,6 +28,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StatusBarUtil.setTransparent(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -49,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initData() {
-
+        selectItem(0);
     }
 
 
@@ -74,7 +76,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     case 0:
                         mCurrentFragment = HomeFragment.newInstance();
                         break;
-                    case 1:
+                    case 3:
                         mCurrentFragment = MyFragment.newInstance();
                         break;
                     default:
@@ -103,23 +105,50 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 if (mPosition==0){
                     break;
                 }
-                my_ima.setSelected(false);
-                home_ima.setSelected(true);
-                changeFrament("aFragment",0);
-                home_t.setTextColor(Color.parseColor("#d81e06"));
-                my_t.setTextColor(Color.parseColor("#333333"));
+                selectItem(0);
                 break;
             case R.id.my_ima:
             case R.id.my_t:
-                if (mPosition==1){
+                if (mPosition==3){
                     break;
                 }
+                selectItem(3);
+                break;
+        }
+    }
+
+
+    private void  selectItem(int index){
+        mPosition=index;
+        switch (index){
+            case 0:
+                my_ima.setSelected(false);
+                home_ima.setSelected(true);
+                home_t.setTextColor(Color.parseColor("#d81e06"));
+                my_t.setTextColor(Color.parseColor("#333333"));
+                changeFrament("aFragment",0);
+                break;
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
                 my_ima.setSelected(true);
                 home_ima.setSelected(false);
                 home_t.setTextColor(Color.parseColor("#333333"));
                 my_t.setTextColor(Color.parseColor("#d81e06"));
-                changeFrament("bFragment",1);
+                changeFrament("bFragment",3);
                 break;
+
+
         }
+
+
     }
+
+
+
+
 }
