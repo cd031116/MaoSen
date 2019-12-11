@@ -23,7 +23,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public int setFmView() {
-        return R.layout.fm_home;
+        return R.layout.fragment_my;
     }
 
     @Override

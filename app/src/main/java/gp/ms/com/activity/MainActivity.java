@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initView() {
+        mFragmentMan = getSupportFragmentManager();
         home_ima=findViewById(R.id.home_ima);
         home_t=findViewById(R.id.home_t);
         my_ima=findViewById(R.id.my_ima);

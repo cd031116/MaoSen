@@ -10,6 +10,6 @@
         android:color="@color/white" />
        
     <size
-        android:width="@dimen/dp_70"
-        android:height="@dimen/dp_70" />
+        android:width="@dimen/dp_90"
+        android:height="@dimen/dp_90" />
 </shape>
