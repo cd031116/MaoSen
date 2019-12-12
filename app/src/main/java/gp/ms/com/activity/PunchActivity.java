@@ -80,7 +80,7 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void initData() {
-        top_title.setText("茂深集团");
+        top_title.setText(R.string.app_name);
         time_t.setText(DataUtils.getNYR());
         showDialog();
     }

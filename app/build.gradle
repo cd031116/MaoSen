@@ -1,21 +1,50 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
-        applicationId "gp.ms.com"
-        minSdkVersion 17
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            storeFile file('maosen.jks')
+            storePassword '123456'
+            keyAlias 'maosen'
+            keyPassword '123456'
+        }
+        debug {
+            storeFile file('maosen.jks')
+            storePassword '123456'
+            keyAlias 'maosen'
+            keyPassword '123456'
+        }
+    }
+
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BaseUrl", "\"http://192.168.199.205:80/\""
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            signingConfig signingConfigs.debug
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BaseUrl", "\"https://jxt.huierlok.com/\""
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+            signingConfig signingConfigs.release
         }
     }
+
 }
 
 //1，增加jitpack支持
@@ -31,11 +60,27 @@ allprojects {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 //    //4，permissionsdispatcher权限
-    implementation'com.github.hotchemi:permissionsdispatcher:3.1.0'
+    implementation 'com.github.hotchemi:permissionsdispatcher:3.1.0'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
+    implementation rootProject.ext.dependencies.appcompat
+    implementation rootProject.ext.dependencies.cardview
+    implementation rootProject.ext.dependencies.rxjava2
+    implementation rootProject.ext.dependencies.rxandroid
+    implementation rootProject.ext.dependencies.retrofit
+    implementation rootProject.ext.dependencies.gson
+    implementation rootProject.ext.dependencies.scalars
+    implementation rootProject.ext.dependencies.rxjava2Adapter
+    implementation rootProject.ext.dependencies.logging
+    implementation rootProject.ext.dependencies.glide
+    implementation rootProject.ext.dependencies.recyclerview
+    implementation rootProject.ext.dependencies.eventbus
+    implementation rootProject.ext.dependencies.BaseRecyclerViewAdapterHelper
+    implementation rootProject.ext.dependencies.banner
+    implementation rootProject.ext.dependencies.bugly
+    implementation rootProject.ext.dependencies.design
+    implementation 'com.android.support:multidex:1.0.0'
 }

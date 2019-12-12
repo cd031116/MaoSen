@@ -2,12 +2,15 @@ package gp.ms.com.base;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
+import gp.ms.com.activity.MainActivity;
+import gp.ms.com.utils.StatusBarUtil;
 import gp.ms.com.widget.LodingDialog;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -17,6 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppManager.getAppManager().addActivity(this);
         setContentView(setLayout());
+        setStatusBar();
         initView();
         initData();
     }
@@ -30,6 +34,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     // 初始化数据
     protected abstract void initData();
+
+
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this,Color.parseColor("#d81e06"),0);
+    }
 
 
     /**

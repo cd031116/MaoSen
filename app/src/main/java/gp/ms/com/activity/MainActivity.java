@@ -27,7 +27,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StatusBarUtil.setColor(this,Color.parseColor("#d81e06"),0);
         super.onCreate(savedInstanceState);
     }
 
@@ -124,7 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case 0:
                 my_ima.setSelected(false);
                 home_ima.setSelected(true);
-                home_t.setTextColor(Color.parseColor("#d81e06"));
+                home_t.setTextColor(Color.parseColor("#fc1645"));
                 my_t.setTextColor(Color.parseColor("#333333"));
                 changeFrament("aFragment",0);
                 break;
@@ -138,7 +137,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 my_ima.setSelected(true);
                 home_ima.setSelected(false);
                 home_t.setTextColor(Color.parseColor("#333333"));
-                my_t.setTextColor(Color.parseColor("#d81e06"));
+                my_t.setTextColor(Color.parseColor("#fc1645"));
                 changeFrament("bFragment",3);
                 break;
 
