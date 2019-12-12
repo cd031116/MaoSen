@@ -11,5 +11,9 @@
     <color name="c_333">#333333</color>
     <color name="green_3">#00CD00</color>
     <color name="green_5FC4DF">#5FC4DF</color>
-    
+
+    <color name="dialog_red">#f03933</color>
+
+
+
 </resources>

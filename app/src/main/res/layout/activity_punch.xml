@@ -82,17 +82,37 @@
             android:layout_height="wrap_content"
             android:text="上班时间08:30"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <TextView
+                android:id="@+id/time_s"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="打卡时间08:20"
+                android:textSize="@dimen/sp_16"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dp_10"/>
+
 
             <LinearLayout
+                android:id="@+id/daka_l"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/green_circel"
                 android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:visibility="visible"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/dp_10"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/daka_t"
                     android:text="打卡"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -114,9 +134,38 @@
 
             </LinearLayout>
 
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/hint_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前不在考勤范围"
+                android:textColor="@color/green_5FC4DF"
+                android:textSize="@dimen/sp_12"/>
+
+            <TextView
+                android:id="@+id/look_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="----查看详情>"
+                android:textColor="@color/green_5FC4DF"
+                android:textSize="@dimen/sp_12"/>
+        </LinearLayout>
 
 
     </LinearLayout>
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -126,6 +175,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10"
         android:background="@color/f0f0f0"/>
+
+
 
 
     <LinearLayout
@@ -139,12 +190,29 @@
             android:layout_height="wrap_content"
             android:text="下班时间18:30"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/time_x"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="打卡时间08:20"
+                android:textSize="@dimen/sp_16"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dp_10"/>
+
 
         <LinearLayout
+            android:id="@+id/daka_x"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/red_circel"
             android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:layout_marginTop="@dimen/dp_10"
             android:orientation="vertical">
@@ -159,6 +227,7 @@
 
 
             <TextClock
+                android:id="@+id/clock_x"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -170,9 +239,33 @@
 
         </LinearLayout>
 
+        </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/hint_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:visibility="visible"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前不在考勤范围"
+                android:textColor="@color/green_5FC4DF"
+                android:textSize="@dimen/sp_12"/>
 
+            <TextView
+                android:id="@+id/look_location_x"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="----查看详情>"
+                android:textColor="@color/green_5FC4DF"
+                android:textSize="@dimen/sp_12"/>
+
+        </LinearLayout>
 
 
 
