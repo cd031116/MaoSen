@@ -3,7 +3,7 @@
     android:id="@+id/top_layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_50"
-    android:background="@color/red_f03933"
+    android:background="@color/main_red"
     android:visibility="visible" >
 
     <LinearLayout

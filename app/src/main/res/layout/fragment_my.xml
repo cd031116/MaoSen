@@ -9,7 +9,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
-        android:background="@color/dialog_red"
+        android:background="@color/main_red"
         android:gravity="center"
         android:text="我的"
         android:textColor="@color/white"

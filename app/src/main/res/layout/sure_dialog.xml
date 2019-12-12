@@ -14,7 +14,7 @@
         android:textColor="@color/white"
         android:gravity="center"
         android:text="提示"
-        android:background="@color/dialog_red"
+        android:background="@color/main_red"
         android:padding="@dimen/dp_10"/>
 
         <EditText
@@ -42,7 +42,7 @@
                android:layout_marginLeft="@dimen/dp_10"
                android:padding="@dimen/dp_5"
                android:textSize="@dimen/sp_12"
-               android:textColor="@color/dialog_red"
+               android:textColor="@color/main_red"
                android:background="@drawable/circle_red_annular"
                android:gravity="center"
                android:text="取消"
