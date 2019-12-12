@@ -17,8 +17,9 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
-    <meta-data android:name="android.max_aspect"
-        android:value="2.1"/>
+    <meta-data
+        android:name="android.max_aspect"
+        android:value="2.1" />
 
     <application
         android:name=".base.MyApp"
@@ -43,6 +44,8 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.RegistActivity"></activity>
     </application>
 
 </manifest>

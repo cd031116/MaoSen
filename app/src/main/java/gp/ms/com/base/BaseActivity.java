@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
+import gp.ms.com.R;
 import gp.ms.com.activity.MainActivity;
 import gp.ms.com.utils.StatusBarUtil;
 import gp.ms.com.widget.LodingDialog;
@@ -37,7 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this,Color.parseColor("#d81e06"),0);
+        StatusBarUtil.setColor(this,Color.parseColor("#fc1645"),0);
     }
 
 

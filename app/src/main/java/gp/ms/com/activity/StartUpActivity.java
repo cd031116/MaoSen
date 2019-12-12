@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import gp.ms.com.R;
@@ -18,6 +19,13 @@ public class StartUpActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         StatusBarUtil.setTranslucent(StartUpActivity.this,0);
         super.onCreate(savedInstanceState);
+    }
+
+
+    @Override
+    protected void setStatusBar() {
+
+        StatusBarUtil.setTransparent(this);
     }
 
     @Override
@@ -38,7 +46,7 @@ public class StartUpActivity extends BaseActivity {
         aa.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
-                startActivity(new Intent(StartUpActivity.this, MainActivity.class));
+                startActivity(new Intent(StartUpActivity.this, LoginActivity.class));
                 finish();
             }
 
