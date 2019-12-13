@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.multidex.MultiDex;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class MyApp  extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        SDKInitializer.initialize(getApplicationContext());//百度地图
         instances = this;
         initCustomRxHttpUtils();
     }

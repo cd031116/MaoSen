@@ -113,7 +113,7 @@
 
                 <TextView
                     android:id="@+id/daka_t"
-                    android:text="打卡"
+                    android:text="打卡签到"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
