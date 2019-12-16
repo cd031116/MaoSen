@@ -1,5 +1,7 @@
 package gp.ms.com.activity;
+import android.Manifest;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -14,8 +16,14 @@ import gp.ms.com.base.BaseActivity;
 import gp.ms.com.fragment.HomeFragment;
 import gp.ms.com.fragment.MyFragment;
 import gp.ms.com.utils.StatusBarUtil;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
 
-
+@RuntimePermissions
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     FragmentManager mFragmentMan;
     ImageButton home_ima;
@@ -51,6 +59,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void initData() {
         selectItem(0);
+        MainActivityPermissionsDispatcher.needLocantionWithPermissionCheck(this);
     }
 
 
@@ -72,6 +81,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
             if (mCurrentFragment == null){
                 switch (index) {
+
                     case 0:
                         mCurrentFragment = HomeFragment.newInstance();
                         break;
@@ -144,9 +154,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         }
 
+    }
+
+
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public  void needLocantion() {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
 
 
 

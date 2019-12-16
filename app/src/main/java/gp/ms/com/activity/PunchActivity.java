@@ -5,34 +5,45 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
+import gp.ms.com.http.utils.ToastUtils;
 import gp.ms.com.utils.DataUtils;
+import gp.ms.com.utils.IntentUtils;
 import gp.ms.com.utils.StatusBarUtil;
+import gp.ms.com.utils.Utils;
+import gp.ms.com.widget.HintDialog;
 import gp.ms.com.widget.SureDialog;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -54,12 +65,23 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
     private LinearLayout hint_two;
     private TextView look_location;
     private TextView look_location_x;
-    //是否已经授权
-    private boolean isAllowPermissions = false;
-
+    private LinearLayout xiaban_l;
+    private LinearLayout shangb_l;
+    private TextView no_pinch;
+    private TextView no_pinch_t;
+    private TextView time_s;
+    private TextView time_x;
+    private TextView gps_t;
+    private TextView gps_s;
+    private SwipeRefreshLayout refreshLayout;
+    private TextView daka_t;//上班打卡文字
+    private TextView daka_xt;//下班打卡文字
+    private boolean sCan=false;
+    private boolean xCan=false;
+    private boolean isLocation=false;
     //是否外勤
     private boolean isWaiqin=true;
-
+    private List<LocalMedia> selectList=new ArrayList<>();
     //--------------------
     private LatLng mDestinationPoint;//目的地坐标点
     private LocationClient client;//定位监听
@@ -98,21 +120,38 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
         clock_x=findViewById(R.id.clock_x);
         look_location_x=findViewById(R.id.look_location_x);
         look_location=findViewById(R.id.look_location);
+        xiaban_l=findViewById(R.id.xiaban_l);
+        no_pinch=findViewById(R.id.no_pinch);
+        time_s=findViewById(R.id.time_s);
+        no_pinch_t=findViewById(R.id.no_pinch_t);
+        time_x=findViewById(R.id.time_x);
+        gps_t=findViewById(R.id.gps_t);
+        refreshLayout=findViewById(R.id.swipe);
+        shangb_l=findViewById(R.id.shangb_l);
+        gps_s=findViewById(R.id.gps_s);
+        daka_t=findViewById(R.id.daka_t);
+        daka_xt=findViewById(R.id.daka_xt);
+        daka_t.setOnClickListener(this);
         top_left.setOnClickListener(this);
         top_image.setOnClickListener(this);
         daka_l.setOnClickListener(this);
+        daka_x.setOnClickListener(this);
         look_location.setOnClickListener(this);
         look_location_x.setOnClickListener(this);
+        gps_t.setOnClickListener(this);
+        refreshLayout.setColorSchemeColors(Color.parseColor("#BF3183"),Color.parseColor("#65BD32"),Color.parseColor("#2C68C8"), Color.parseColor("#C6492B"));
     }
 
     @Override
     protected void initData() {
         top_title.setText(R.string.app_name);
         time_t.setText(DataUtils.getNYR());
-        showDialog();
         mLatitude=28.160197;
         mLongitude=113.620241;
         mDestinationPoint = new LatLng(mLatitude, mLongitude);//假设公司坐标
+
+
+
     }
 
     @Override
@@ -123,10 +162,19 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
                 PunchActivity.this.finish();
                 break;
             case R.id.daka_l:
-                if (isWaiqin){
-                    showdialog();
+                if (sCan){
+                    PunchActivityPermissionsDispatcher.needCameraWithPermissionCheck(this);
+                    PunchActivityPermissionsDispatcher.needStorageWithPermissionCheck(this);
                 }else {
-
+                    showdialog();
+                }
+                break;
+            case R.id.daka_x:
+                if (xCan){
+                    PunchActivityPermissionsDispatcher.needCameraWithPermissionCheck(this);
+                    PunchActivityPermissionsDispatcher.needStorageWithPermissionCheck(this);
+                }else {
+                    showdialog();
                 }
                 break;
             case R.id.look_location:
@@ -138,15 +186,26 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private void showDialog() {
-        PunchActivityPermissionsDispatcher.requestPermissionWithPermissionCheck(PunchActivity.this);
+
+
+
+    /**
+     * 拍照权限
+     */
+    @NeedsPermission(Manifest.permission.CAMERA)
+    public void needCamera() {
+      takePhoto();
     }
 
 
-    @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-    public void requestPermission() {
-        getLocationClientOption();
+    /**存储权限
+     * */
+    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void needStorage() {
+
+
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -154,11 +213,18 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
         PunchActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
-    @OnShowRationale(Manifest.permission.ACCESS_FINE_LOCATION)
-    public void showRation(final PermissionRequest request){
+
+
+    /**
+     * 注解在用于向用户解释为什么需要调用该权限的方法上，只有当第一次请求权限被用户拒绝，下次请求权限之前会调用
+     *
+     * @param request
+     */
+    @OnShowRationale({Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void showRationStore(final PermissionRequest request) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("茂深集团");
-        builder.setMessage("考勤签到,需要GPS权限");
+        builder.setMessage("考勤签到,需要图片存储权限,请允许!");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 request.proceed();
@@ -175,15 +241,69 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
+    @OnShowRationale(Manifest.permission.CAMERA)
+    public void showRationCamera(final PermissionRequest request) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("茂深集团");
+        builder.setMessage("考勤签到,需要拍照权限,请允许!");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                request.proceed();
+                dialog.dismiss();
+            }
+        })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        request.cancel();
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+    }
+
+
+
+    /**
+     * 注解在当用户拒绝了权限请求时需要调用的方法上
+     */
+    @OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION})
     public void OnDenied() {
-
+        ToastUtils.showToast("考勤打卡需要GPS权限才能正常工作");
     }
 
-    @OnNeverAskAgain(Manifest.permission.ACCESS_FINE_LOCATION)
+
+    /**
+     * 注解在当用户拒绝了权限请求时需要调用的方法上
+     */
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA})
+    public void OnDeniedCamera() {
+        ToastUtils.showToast("打卡签到需要,拍照权限和图片存储权限才能正常工作");
+    }
+
+
+
+    /**
+     * 注解在当用户选中了授权窗口中的不再询问复选框后并拒绝了权限请求时需要调用的方法，一般可以向用户解释为何申请此权限，并根据实际需求决定是否再次弹出权限请求对话框
+     */
+    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA})
     public void OnAgain() {
-    }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("茂深集团");
+        builder.setMessage("考勤签到,需要拍照权限和图片存储权限,您已拒绝,请前往设置!");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                IntentUtils.gotoPermission(PunchActivity.this);
+                dialog.dismiss();
+            }
+        })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
 
+    }
 
 
     private void showdialog() {
@@ -194,9 +314,42 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onCallBack(String strs) {
 
+
+
             }
         });
     }
+
+    private void takePhoto(){
+        // 单独拍照
+        PictureSelector.create(PunchActivity.this)
+                .openCamera(PictureMimeType.ofImage())
+                .compress(true)
+                .forResult(PictureConfig.CHOOSE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片选择结果回调
+                    selectList = PictureSelector.obtainMultipleResult(data);
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                    // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
+                    for (LocalMedia media : selectList) {
+                        Log.i("图片-----》", media.getCompressPath());
+                    }
+                    submitDaka(selectList.get(0).getCompressPath());
+                    break;
+            }
+        }
+    }
+
 
 
     /***
@@ -204,6 +357,8 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
      * @return
      */
     public void getLocationClientOption() {
+        daka_l.setEnabled(true);
+        daka_x.setEnabled(true);
         mOption = new LocationClientOption();
         mOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         mOption.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
@@ -253,11 +408,22 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
             mDistance = DistanceUtil.getDistance(mDestinationPoint, LocationPoint);
             if (mDistance <= DISTANCE) {
                 //显示文字 "您已在签到范围内"
-                Toast.makeText(PunchActivity.this,"已进入考勤范围",Toast.LENGTH_SHORT).show();
+                sCan=true;
+                xCan=true;
+                client.stop();
+                daka_t.setText("考勤打卡");
+                daka_xt.setText("考勤打卡");
+                daka_l.setBackgroundResource(R.drawable.green_circel);
+                daka_x.setBackgroundResource(R.drawable.green_circel);
+                hint_one.setVisibility(View.GONE);
+                hint_two.setVisibility(View.GONE);
             } else {
-
-                Toast.makeText(PunchActivity.this,"未进入考勤范围",Toast.LENGTH_SHORT).show();
-
+                hint_one.setVisibility(View.VISIBLE);
+                hint_two.setVisibility(View.VISIBLE);
+                daka_l.setBackgroundResource(R.drawable.red_circel);
+                daka_x.setBackgroundResource(R.drawable.red_circel);
+                daka_t.setText("外勤");
+                daka_xt.setText("外勤");
             }
 
         }
@@ -276,8 +442,127 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
+        showYesOrNoGps();
         if (client != null) {
             client.start();
         }
     }
+
+
+    private void showNoGps(){
+        daka_t.setText("无法打卡");
+        daka_xt.setText("无法打卡");
+        gps_t.setVisibility(View.VISIBLE);
+        gps_s.setVisibility(View.VISIBLE);
+        hint_one.setVisibility(View.GONE);
+        hint_two.setVisibility(View.GONE);
+        daka_l.setBackgroundResource(R.drawable.gray_cirel);
+        daka_x.setBackgroundResource(R.drawable.gray_cirel);
+        daka_l.setEnabled(false);
+        daka_x.setEnabled(false);
+
+    }
+
+
+
+    /**上班打卡之前显示
+     * */
+    private void ShowOne(){
+        xiaban_l.setVisibility(View.GONE);
+        no_pinch.setVisibility(View.GONE);
+        time_s.setVisibility(View.GONE);
+        //进入考勤范围
+        daka_l.setBackgroundResource(R.drawable.green_circel);
+        hint_one.setVisibility(View.GONE);
+        //未进入
+        daka_l.setBackgroundResource(R.drawable.red_circel);
+        hint_one.setVisibility(View.VISIBLE);
+
+    }
+
+    /**
+     * 下班之前
+     * */
+    private void ShowTwo(boolean daka){
+        xiaban_l.setVisibility(View.VISIBLE);
+        daka_l.setVisibility(View.GONE);
+        if (daka){
+            time_s.setVisibility(View.VISIBLE);
+            time_s.setText("2019-12-25");
+            no_pinch.setVisibility(View.GONE);
+        }else {
+            time_s.setVisibility(View.GONE);
+            no_pinch.setVisibility(View.VISIBLE);
+        }
+        //未进入
+        daka_x.setBackgroundResource(R.drawable.red_circel);
+        hint_two.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 下班后
+     * */
+ private void showOver(boolean sdaka,boolean xdaka){
+     daka_l.setVisibility(View.GONE);
+     xiaban_l.setVisibility(View.VISIBLE);
+     daka_x.setVisibility(View.GONE);
+     if (sdaka){
+         time_s.setVisibility(View.VISIBLE);
+         no_pinch.setVisibility(View.GONE);
+         time_s.setText("2019-12-25");
+     }else {
+         time_s.setVisibility(View.GONE);
+         no_pinch.setVisibility(View.VISIBLE);
+     }
+     //--
+     if (xdaka){
+         no_pinch_t.setVisibility(View.GONE);
+         time_x.setVisibility(View.VISIBLE);
+         time_x.setText("2019-12-25");
+     }else {
+         no_pinch_t.setVisibility(View.VISIBLE);
+         time_x.setVisibility(View.GONE);
+     }
+ }
+
+
+    /**gps是否打开
+     * */
+    private void showYesOrNoGps(){
+        if (Utils.GpsIsOPen(PunchActivity.this)) {
+            gps_t.setVisibility(View.GONE);
+            gps_s.setVisibility(View.GONE);
+            hint_one.setVisibility(View.GONE);
+            hint_two.setVisibility(View.GONE);
+            daka_t.setText("正在定位");
+            daka_xt.setText("正在定位");
+            if (!isLocation){
+                getLocationClientOption();
+            }
+        }else {
+            showNoGps();
+        }
+    }
+
+
+    /**打卡上传照片
+     * */
+    private void submitDaka(String path) {
+        if (TextUtils.isEmpty(path)){
+            return;
+        }
+        final HintDialog dialog = new HintDialog(PunchActivity.this);
+        dialog.show();
+        dialog.settCotent(PunchActivity.this,path);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnclickCallBack(new HintDialog.OnclickCallBack() {
+            @Override
+            public void onCallBack() {
+
+
+
+            }
+        });
+    }
+
 }

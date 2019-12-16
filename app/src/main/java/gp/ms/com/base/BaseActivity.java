@@ -3,11 +3,8 @@ package gp.ms.com.base;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.view.WindowManager;
 
 import gp.ms.com.R;
 import gp.ms.com.activity.MainActivity;

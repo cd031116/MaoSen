@@ -74,6 +74,8 @@ dependencies {
     //    //4，permissionsdispatcher权限
     implementation 'com.github.hotchemi:permissionsdispatcher:3.1.0'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
+    implementation project(':picture_library')
+    implementation project(path: ':ucrop')
     implementation rootProject.ext.dependencies.appcompat
     implementation rootProject.ext.dependencies.cardview
     implementation rootProject.ext.dependencies.rxjava2

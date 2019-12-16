@@ -1,8 +1,12 @@
 package gp.ms.com.widget;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import gp.ms.com.R;
 import gp.ms.com.base.BaseDialog;
@@ -12,7 +16,7 @@ public class HintDialog extends BaseDialog<HintDialog> {
     private TextView submit;
     private TextView cancel;
     private TextView title_t;
-    private TextView edit_e;
+    private ImageView  image_g;
     private OnclickCallBack onclickCallBack;
 
     public HintDialog(Activity context) {
@@ -30,7 +34,7 @@ public class HintDialog extends BaseDialog<HintDialog> {
         submit = inflate.findViewById(R.id.submit);
         cancel = inflate.findViewById(R.id.cancel);
         title_t=inflate.findViewById(R.id.title_t);
-        edit_e=inflate.findViewById(R.id.edit_e);
+        image_g=inflate.findViewById(R.id.image_g);
         return inflate;
     }
 
@@ -69,8 +73,8 @@ public class HintDialog extends BaseDialog<HintDialog> {
         title_t.setText(tNames);
     }
 
-    public void settCotent(String tNames) {
-        edit_e.setText(tNames);
+    public void settCotent(Context cotent,String path) {
+        Glide.with(context).load(path).into(image_g);
     }
 
     public void settSureTitle(String tNames) {

@@ -17,14 +17,14 @@
         android:background="@color/dialog_red"
         android:padding="@dimen/dp_10"/>
 
-    <TextView
-        android:id="@+id/edit_e"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/image_g"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_200"
         android:minHeight="@dimen/dp_120"
+        android:scaleType="centerInside"
+        android:layout_gravity="center_horizontal"
         android:background="@null"
-        android:textSize="@dimen/sp_12"
-        android:textColor="@color/c_333"
         android:padding="@dimen/dp_10"
         android:gravity="center"/>
 
