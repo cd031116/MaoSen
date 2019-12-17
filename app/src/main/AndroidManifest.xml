@@ -64,7 +64,7 @@
         <activity
             android:name=".activity.PunchMapActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ContainActivity"></activity>
+        <activity android:name=".activity.ContainActivity"/>
     </application>
 
 </manifest>

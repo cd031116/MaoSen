@@ -13,7 +13,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
+import gp.ms.com.fragment.ContactsFragment;
 import gp.ms.com.fragment.HomeFragment;
+import gp.ms.com.fragment.InoListFragment;
 import gp.ms.com.fragment.MyFragment;
 import gp.ms.com.utils.StatusBarUtil;
 import permissions.dispatcher.NeedsPermission;
@@ -30,7 +32,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     TextView home_t;
     ImageButton my_ima;
     TextView my_t;
+    ImageButton msg_ima;
+    TextView msg_t;
 
+    ImageButton contacts_ima;
+    TextView contacts_t;
    private int mPosition=0;
 
     @Override
@@ -50,10 +56,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         home_t=findViewById(R.id.home_t);
         my_ima=findViewById(R.id.my_ima);
         my_t=findViewById(R.id.my_t);
+        msg_ima=findViewById(R.id.msg_ima);
+        msg_t=findViewById(R.id.msg_t);
+        contacts_ima=findViewById(R.id.contacts_ima);
+        contacts_t=findViewById(R.id.contacts_t);
+
         home_ima.setOnClickListener(this);
         home_t.setOnClickListener(this);
         my_ima.setOnClickListener(this);
         my_t.setOnClickListener(this);
+        msg_ima.setOnClickListener(this);
+        msg_t.setOnClickListener(this);
+        contacts_ima.setOnClickListener(this);
+        contacts_t.setOnClickListener(this);
     }
 
     @Override
@@ -85,6 +100,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     case 0:
                         mCurrentFragment = HomeFragment.newInstance();
                         break;
+                    case 1:
+                        mCurrentFragment = InoListFragment.newInstance();
+                        break;
+                    case 2:
+                        mCurrentFragment = ContactsFragment.newInstance();
+                        break;
                     case 3:
                         mCurrentFragment = MyFragment.newInstance();
                         break;
@@ -115,6 +136,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     break;
                 }
                 selectItem(0);
+                break;
+            case R.id.msg_ima:
+            case R.id.msg_t:
+                if (mPosition==1){
+                    break;
+                }
+                selectItem(1);
+                break;
+            case R.id.contacts_ima:
+            case R.id.contacts_t:
+                if (mPosition==2){
+                    break;
+                }
+                selectItem(2);
                 break;
             case R.id.my_ima:
             case R.id.my_t:

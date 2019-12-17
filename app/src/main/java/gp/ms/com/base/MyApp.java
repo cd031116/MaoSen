@@ -4,9 +4,14 @@ import android.app.Application;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMOptions;
+import com.hyphenate.easeui.EaseUI;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.HashMap;
@@ -23,6 +28,16 @@ public class MyApp  extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        EMOptions options = new EMOptions();
+// 默认添加好友时，是不需要验证的，改成需要验证
+        options.setAcceptInvitationAlways(false);
+        //use default options if options is null
+        if (EaseUI.getInstance().init(this, options)) {
+            //debug mode, you'd better set it to false, if you want release your App officially.
+            EMClient.getInstance().setDebugMode(true);
+
+//            broadcastManager = LocalBroadcastManager.getInstance(appContext);
+        }
         SDKInitializer.initialize(getApplicationContext());//百度地图
         instances = this;
         initCustomRxHttpUtils();

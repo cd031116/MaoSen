@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    useLibrary 'org.apache.http.legacy'
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
         applicationId rootProject.ext.android.applicationId
@@ -10,6 +11,9 @@ android {
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86'
+        }
     }
 
     signingConfigs {
@@ -44,12 +48,22 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 
     sourceSets {
         main {
             jniLibs.srcDir 'libs'
             //说明so的路径为该libs路径，关联所有地图SDK的so文件
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 }
@@ -76,6 +90,7 @@ dependencies {
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
     implementation project(':picture_library')
     implementation project(path: ':ucrop')
+    implementation project(':easeui')
     implementation rootProject.ext.dependencies.appcompat
     implementation rootProject.ext.dependencies.cardview
     implementation rootProject.ext.dependencies.rxjava2
@@ -93,5 +108,10 @@ dependencies {
     implementation rootProject.ext.dependencies.bugly
     implementation rootProject.ext.dependencies.design
     implementation 'com.android.support:multidex:1.0.0'
-    implementation files('libs/BaiduLBS_Android.jar')
+    // Google firebase cloud messaging
 }
+
+//// ADD THIS AT THE BOTTOM
+//repositories {
+//    mavenCentral()
+//}
