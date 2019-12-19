@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gp.ms.com.R;
+import gp.ms.com.activity.OrderListActivity;
 import gp.ms.com.activity.PunchActivity;
 import gp.ms.com.adapter.AccessAdapter;
 import gp.ms.com.adapter.GlideImageLoader;
@@ -82,11 +83,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     case FunctionId.SIGN_DAKA:
                         HomeFragmentPermissionsDispatcher.needLocationWithPermissionCheck(HomeFragment.this);
                         break;
+                        case FunctionId.ORDER_ID:
+                            startActivity(new Intent(getActivity(),OrderListActivity.class));
+                            break;
 
                 }
             }
         });
         oList.add(new LocalInfo(FunctionId.SIGN_DAKA,"考勤打卡",R.mipmap.sign_icon));
+        oList.add(new LocalInfo(FunctionId.ORDER_ID,"订单管理",R.mipmap.order_icon));
         mAdapter.setNewData(oList);
 
         imageUrl.add(R.mipmap.banner_1);
