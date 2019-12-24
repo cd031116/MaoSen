@@ -30,4 +30,5 @@
     <string name="no_call_data">没有通话数据</string>
     <string name="switch_camera">切换摄像头</string>
     <string name="network_unstable">网络不稳定</string>
+    <string name="at_your_in_group">%s在群聊中@了你</string>
 </resources>
