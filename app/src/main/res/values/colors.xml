@@ -19,5 +19,5 @@
     <color name="dialog_red">#fe0036</color>
 
     <color name="main_red">#fc1645</color>
-
+    <color name="holo_black">#ff111111</color>
 </resources>

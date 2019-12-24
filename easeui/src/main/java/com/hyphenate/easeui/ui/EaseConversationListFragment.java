@@ -36,7 +36,7 @@ import java.util.Map;
 
 /**
  * conversation list fragment
- *
+ *会话列表页面
  */
 public class EaseConversationListFragment extends EaseBaseFragment{
 	private final static int MSG_REFRESH = 2;

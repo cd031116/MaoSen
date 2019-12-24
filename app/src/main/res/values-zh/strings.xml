@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">茂森云控</string>
+
+    <string name="title_live">互动视频</string>
+    <string name="emojicon_test_name">表情</string>
+    <string name="recall">撤回</string>
+    <string name="msg_recall_by_self">您撤回了一条消息</string>
+    <string name="msg_conference_invite">快来加入会议</string>
+    <string name="group_announcement">公告</string>
+    <string name="share_files">共享文件</string>
+    <string name="serach_group_message">消息搜索</string>
+    <string name="block_offline_group_push">屏蔽离线消息推送</string>
+    <string name="change_the_group_extension">改变群扩展</string>
+    <string name="change_the_group_description">改变群描述</string>
+    <string name="group_owner">群主：</string>
+    <string name="group_nick">聊天室名称:</string>
+    <string name="is_modify_the_group_description">正在修改群详情..</string>
+    <string name="Modify_the_group_description_successful">修改群详情成功</string>
+    <string name="change_the_group_description_failed_please">修改群详情失败，请检查网络或稍后重试</string>
+    <string name="change_the_group_extension_failed_please">修改群扩展失败，请检查网络或稍后重试</string>
+    <string name="Modify_the_group_extension_successful">修改群扩展成功</string>
+    <string name="messages_are_empty">聊天记录已被清空</string>
+    <string name="msg_recall_by_user">%1$s 撤回了一条消息</string>
+    <string name="call_version_inconsistent">通话协议版本不一致</string>
+    <string name="have_connected_with">已经和对方建立连接</string>
+    <string name="no_call_data">没有通话数据</string>
+    <string name="switch_camera">切换摄像头</string>
+    <string name="network_unstable">网络不稳定</string>
+    <string name="at_your_in_group">%s在群聊中@了你</string>
+</resources>

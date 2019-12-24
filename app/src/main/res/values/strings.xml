@@ -1,3 +1,33 @@
 <resources>
-    <string name="app_name">茂森云控</string>
+    <string name="app_name" translatable="false">茂森云控</string>
+
+    <string name="title_live" translatable="false">互动视频</string>
+    <string name="emojicon_test_name" translatable="false">表情</string>
+    <string name="recall" translatable="false">撤回</string>
+    <string name="msg_recall_by_self">msg_recall_by_self</string>
+    <string name="msg_conference_invite">msg_conference_invite</string>
+    <string name="group_announcement">group_announcement</string>
+    <string name="share_files">share_files</string>
+    <string name="serach_group_message">serach_group_message</string>
+    <string name="block_offline_group_push">block_offline_group_push</string>
+    <string name="change_the_group_extension">change_the_group_extension</string>
+    <string name="change_the_group_description">change_the_group_description</string>
+    <string name="group_owner">group_owner：</string>
+    <string name="group_nick">group_nick:</string>
+
+
+    <string name="is_modify_the_group_description">is_modify_the_group_description..</string>
+    <string name="Modify_the_group_description_successful">Modify_the_group_description_successful</string>
+    <string name="change_the_group_description_failed_please">change_the_group_description_failed_please</string>
+    <string name="change_the_group_extension_failed_please">change_the_group_extension_failed_please</string>
+    <string name="Modify_the_group_extension_successful">Modify_the_group_extension_successful</string>
+    <string name="messages_are_empty">messages_are_empty</string>
+    <string name="msg_recall_by_user">%1$s msg_recall_by_user</string>
+    <string name="call_version_inconsistent">call_version_inconsistent</string>
+
+
+    <string name="have_connected_with">已经和对方建立连接</string>
+    <string name="no_call_data">没有通话数据</string>
+    <string name="switch_camera">切换摄像头</string>
+    <string name="network_unstable">网络不稳定</string>
 </resources>

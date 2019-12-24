@@ -12,11 +12,16 @@ import com.baidu.mapapi.SDKInitializer;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.EaseUI;
+import com.hyphenate.push.EMPushHelper;
+import com.hyphenate.push.EMPushType;
+import com.hyphenate.push.PushListener;
+import com.hyphenate.util.EMLog;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.HashMap;
 import java.util.Map;
 import gp.ms.com.BuildConfig;
+import gp.ms.com.chat.ChatHelper;
 import gp.ms.com.http.RxHttpUtils;
 import gp.ms.com.http.config.OkHttpConfig;
 import gp.ms.com.http.cookie.store.SPCookieStore;
@@ -28,15 +33,17 @@ public class MyApp  extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        EMOptions options = new EMOptions();
-// 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
-        //use default options if options is null
-        if (EaseUI.getInstance().init(this, options)) {
-            //debug mode, you'd better set it to false, if you want release your App officially.
-            EMClient.getInstance().setDebugMode(true);
-
-//            broadcastManager = LocalBroadcastManager.getInstance(appContext);
+        instances = this;
+        ChatHelper.getInstance().init(this);
+        // 请确保环信SDK相关方法运行在主进程，子进程不会初始化环信SDK（该逻辑在EaseUI.java中）
+        if (EaseUI.getInstance().isMainProcess(this)) {
+            EMPushHelper.getInstance().setPushListener(new PushListener() {
+                @Override
+                public void onError(EMPushType pushType, long errorCode) {
+                    // TODO: 返回的errorCode仅9xx为环信内部错误，可从EMError中查询，其他错误请根据pushType去相应第三方推送网站查询。
+                    EMLog.e("PushClient", "Push client occur a error: " + pushType + " - " + errorCode);
+                }
+            });
         }
         SDKInitializer.initialize(getApplicationContext());//百度地图
         instances = this;

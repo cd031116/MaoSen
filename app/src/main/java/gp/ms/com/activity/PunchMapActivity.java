@@ -41,7 +41,9 @@ import java.util.List;
 
 import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
-
+/**
+ * 打卡地图详情页面
+ * */
 public class PunchMapActivity extends BaseActivity implements SensorEventListener, View.OnClickListener  {
     /**
      * 规定到达距离范围距离
