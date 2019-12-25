@@ -2,6 +2,7 @@ package gp.ms.com.activity;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -34,6 +35,7 @@ import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
 import gp.ms.com.chat.ChatHelper;
 import gp.ms.com.chat.db.InviteMessgeDao;
+import gp.ms.com.chat.db.UserDao;
 import gp.ms.com.fragment.ContactsFragment;
 import gp.ms.com.fragment.HomeFragment;
 import gp.ms.com.fragment.InoListFragment;
@@ -63,7 +65,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private InviteMessgeDao inviteMessgeDao;
     //
     private int currentTabIndex;
-
+    private boolean isExceptionDialogShow =  false;
     private HomeFragment homeFragment;
     private InoListFragment inoListFragment;
     private ContactsFragment contactListFragment;
@@ -75,10 +77,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private boolean isCurrentAccountRemoved = false;
     private LocalBroadcastManager broadcastManager;
     private BroadcastReceiver broadcastReceiver;
+    private android.app.AlertDialog.Builder exceptionBuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         inviteMessgeDao = new InviteMessgeDao(this);
+        UserDao userDao = new UserDao(this);
+        super.onCreate(savedInstanceState);
         registerBroadcastReceiver();
         EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
         EMClient.getInstance().addClientListener(clientListener);
@@ -121,6 +125,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initView() {
+        if (getIntent() != null &&
+                (getIntent().getBooleanExtra(Constant.ACCOUNT_REMOVED, false) ||
+                        getIntent().getBooleanExtra(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD, false) ||
+                        getIntent().getBooleanExtra(Constant.ACCOUNT_KICKED_BY_OTHER_DEVICE, false))) {
+            ChatHelper.getInstance().logout(false,null);
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+            return;
+        } else if (getIntent() != null && getIntent().getBooleanExtra("isConflict", false)) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+            return;
+        }
+        showExceptionDialogFromIntent(getIntent());
         mFragmentMan = getSupportFragmentManager();
         home_ima=findViewById(R.id.home_ima);
         home_t=findViewById(R.id.home_t);
@@ -236,7 +254,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
-    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    @NeedsPermission({Manifest.permission.CAMERA,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public  void needLocantion() {
 
     }
@@ -455,6 +473,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void onDestroy() {
         super.onDestroy();
         unregisterBroadcastReceiver();
+        EMClient.getInstance().chatManager().removeMessageListener(messageListener);
     }
 
     @Override
@@ -466,8 +485,62 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         return super.onKeyDown(keyCode, event);
     }
 
+    private void showExceptionDialogFromIntent(Intent intent) {
+        EMLog.e("MainActivity", "showExceptionDialogFromIntent");
+        if (!isExceptionDialogShow && intent.getBooleanExtra(Constant.ACCOUNT_CONFLICT, false)) {
+            showExceptionDialog(Constant.ACCOUNT_CONFLICT);
+        } else if (!isExceptionDialogShow && intent.getBooleanExtra(Constant.ACCOUNT_REMOVED, false)) {
+            showExceptionDialog(Constant.ACCOUNT_REMOVED);
+        } else if (!isExceptionDialogShow && intent.getBooleanExtra(Constant.ACCOUNT_FORBIDDEN, false)) {
+            showExceptionDialog(Constant.ACCOUNT_FORBIDDEN);
+        } else if (intent.getBooleanExtra(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD, false) ||
+                intent.getBooleanExtra(Constant.ACCOUNT_KICKED_BY_OTHER_DEVICE, false)) {
+            this.finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+    }
 
+    private void showExceptionDialog(String exceptionType) {
+        isExceptionDialogShow = true;
+        ChatHelper.getInstance().logout(false,null);
+        String st = getResources().getString(R.string.Logoff_notification);
+        if (!MainActivity.this.isFinishing()) {
+            // clear up global variables
+            try {
+                if (exceptionBuilder == null)
+                    exceptionBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
+                exceptionBuilder.setTitle(st);
+                exceptionBuilder.setMessage(getExceptionMessageId(exceptionType));
+                exceptionBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        exceptionBuilder = null;
+                        isExceptionDialogShow = false;
+                        finish();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                });
+                exceptionBuilder.setCancelable(false);
+                exceptionBuilder.create().show();
+                isConflict = true;
+            } catch (Exception e) {
+            }
+        }
+    }
 
+    private int getExceptionMessageId(String exceptionType) {
+        if(exceptionType.equals(Constant.ACCOUNT_CONFLICT)) {
+            return R.string.connect_conflict;
+        } else if (exceptionType.equals(Constant.ACCOUNT_REMOVED)) {
+            return R.string.em_user_remove;
+        } else if (exceptionType.equals(Constant.ACCOUNT_FORBIDDEN)) {
+            return R.string.user_forbidden;
+        }
+        return R.string.Network_error;
+    }
 
 }

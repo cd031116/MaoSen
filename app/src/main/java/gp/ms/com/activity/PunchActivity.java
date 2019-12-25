@@ -150,8 +150,6 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
         mLongitude=113.620241;
         mDestinationPoint = new LatLng(mLatitude, mLongitude);//假设公司坐标
 
-
-
     }
 
     @Override
@@ -325,7 +323,7 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
         PictureSelector.create(PunchActivity.this)
                 .openCamera(PictureMimeType.ofImage())
                 .compress(true)
-                .forResult(PictureConfig.CHOOSE_REQUEST);
+                .forResult(PictureConfig.REQUEST_CAMERA);
     }
 
     @Override
@@ -333,7 +331,7 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case PictureConfig.CHOOSE_REQUEST:
+                case PictureConfig.REQUEST_CAMERA:
                     // 图片选择结果回调
                     selectList = PictureSelector.obtainMultipleResult(data);
                     // 例如 LocalMedia 里面返回三种path
@@ -564,5 +562,10 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
             }
         });
     }
+
+
+
+
+
 
 }

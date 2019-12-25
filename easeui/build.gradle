@@ -40,4 +40,6 @@ dependencies {
     implementation rootProject.ext.dependencies.appcompat
     testImplementation 'junit:junit:4.12'
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation project(':picture_library')
+    implementation project(path: ':ucrop')
 }

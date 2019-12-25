@@ -8,8 +8,8 @@
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_top_bar"
-        android:background="@color/top_bar_normal_bg"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/top_red"
         android:gravity="center_vertical" >
 
         <include layout="@layout/ease_commom_back_btn" />
@@ -20,7 +20,7 @@
             android:layout_centerInParent="true"
             android:text="@string/title_user_profile"
             android:textColor="#fff"
-            android:textSize="18sp" />
+            android:textSize="@dimen/sp_16" />
     </RelativeLayout>
     <LinearLayout
         android:layout_width="fill_parent"

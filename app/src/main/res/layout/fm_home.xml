@@ -13,7 +13,7 @@
         android:background="@color/main_red"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_17"
+        android:textSize="@dimen/sp_16"
         android:text="茂森云控"/>
 
     <com.youth.banner.Banner

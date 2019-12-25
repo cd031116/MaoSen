@@ -27,14 +27,6 @@
         app:contactItemName="@string/chat_room" />
 
     <gp.ms.com.chat.widget.ContactItemView
-        android:id="@+id/robot_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
-        android:visibility="gone"
-        app:contactItemName="@string/robot_chat" />
-
-    <gp.ms.com.chat.widget.ContactItemView
         android:id="@+id/conference_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

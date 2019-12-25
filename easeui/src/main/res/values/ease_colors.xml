@@ -6,7 +6,7 @@
     <color name="btn_login_pressed">#46678d</color>
     <color name="btn_logout_normal">#d33f3f</color>
     <color name="btn_logout_pressed">#DA5A4D</color>
-    <color name="c_fc1645">#fc1645</color>
+    <color name="top_red">#fc1645</color>
 
 
     <color name="btn_register_normal">#ffffff</color>

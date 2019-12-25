@@ -8,23 +8,29 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.util.EasyUtils;
+
 import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
+import gp.ms.com.chat.ChatHelper;
+import gp.ms.com.chat.ui.VideoCallActivity;
+import gp.ms.com.chat.ui.VoiceCallActivity;
 import gp.ms.com.utils.StatusBarUtil;
 
 public class StartUpActivity extends BaseActivity {
     private LinearLayout main_line;
-
+    private static final int sleepTime = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StatusBarUtil.setTranslucent(StartUpActivity.this,0);
         super.onCreate(savedInstanceState);
+
     }
 
 
     @Override
     protected void setStatusBar() {
-
         StatusBarUtil.setTransparent(this);
     }
 
@@ -35,6 +41,7 @@ public class StartUpActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        ChatHelper.getInstance().initHandler(this.getMainLooper());
         main_line = findViewById(R.id.main_line);
     }
 
@@ -46,8 +53,7 @@ public class StartUpActivity extends BaseActivity {
         aa.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
-                startActivity(new Intent(StartUpActivity.this, LoginActivity.class));
-                finish();
+                toLogin();
             }
 
             @Override
@@ -61,4 +67,45 @@ public class StartUpActivity extends BaseActivity {
             }
         });
     }
+
+
+    private void  toLogin(){
+            new Thread(new Runnable() {
+                public void run() {
+                    if (ChatHelper.getInstance().isLoggedIn()) {
+                        // auto login mode, make sure all group and conversation is loaed before enter the main screen
+                        long start = System.currentTimeMillis();
+                        EMClient.getInstance().chatManager().loadAllConversations();
+                        EMClient.getInstance().groupManager().loadAllGroups();
+                        long costTime = System.currentTimeMillis() - start;
+                        //wait
+                        if (sleepTime - costTime > 0) {
+                            try {
+                                Thread.sleep(sleepTime - costTime);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        String topActivityName = EasyUtils.getTopActivityName(EMClient.getInstance().getContext());
+                        if (topActivityName != null && (topActivityName.equals(VideoCallActivity.class.getName()) || topActivityName.equals(VoiceCallActivity.class.getName()))) {
+                            // nop
+                            // avoid main screen overlap Calling Activity
+                        } else {
+                            //enter main screen
+                            startActivity(new Intent(StartUpActivity.this, MainActivity.class));
+                        }
+                        finish();
+                    }else {
+                        try {
+                            Thread.sleep(sleepTime);
+                        } catch (InterruptedException e) {
+                        }
+                        startActivity(new Intent(StartUpActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                }
+            }).start();
+    }
+
+
 }

@@ -35,11 +35,11 @@
 
             <ImageView
                 android:id="@+id/top_image"
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_30"
                 android:clickable="false"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/back_left" />
+                android:src="@drawable/ease_mm_title_back" />
 
             <TextView
                 android:id="@+id/top_left_text"
@@ -55,14 +55,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_5"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/top_r"
             android:layout_toRightOf="@+id/top_left"
             android:background="@drawable/sercher_bg"
             android:gravity="center_vertical"
-            android:padding="@dimen/dp_10">
+            android:paddingTop="@dimen/dp_7"
+            android:paddingBottom="@dimen/dp_7"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10">
 
             <ImageView
                 android:layout_width="wrap_content"

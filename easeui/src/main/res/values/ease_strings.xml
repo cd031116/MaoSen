@@ -308,7 +308,8 @@
     <string name="title_ack_read_list">Read List</string>
     <string name="group_ack_read_count">%1$d Read</string>
     <!-- For group ack end -->
-
+    <string name="em_user_remove">user_remove</string>
     <string name="alert_during_typing">Typing ...</string>
     <string name="title_msg_typing">Single chat shows \"Typing\"</string>
+    <string name="user_forbidden">user_forbidden</string>
 </resources>

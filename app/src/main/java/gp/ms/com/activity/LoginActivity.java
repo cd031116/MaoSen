@@ -7,9 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.utils.EaseCommonUtils;
 
 import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
+import gp.ms.com.chat.ChatHelper;
+import gp.ms.com.http.utils.ToastUtils;
 import gp.ms.com.utils.StatusBarUtil;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
@@ -63,4 +70,32 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
     }
+
+    private void  ImLogin(String userName,String password){
+        if (!EaseCommonUtils.isNetWorkConnected(this)) {
+            ToastUtils.showToast("网络不可用");
+            return;
+        }
+        if (ChatHelper.getInstance().isLoggedIn()) {
+
+            return;
+        }
+        EMClient.getInstance().login(userName,password,new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+            }
+        });
+    }
+
 }

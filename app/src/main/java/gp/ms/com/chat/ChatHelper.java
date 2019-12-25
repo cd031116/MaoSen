@@ -431,8 +431,10 @@ public class ChatHelper {
             public void onDisconnected(int error) {
                 EMLog.d("global listener", "onDisconnect" + error);
                 if (error == EMError.USER_REMOVED) {
+                    // 显示帐号已经被移除
                     onUserException(Constant.ACCOUNT_REMOVED);
                 } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+                    // 显示帐号在其他设备登录
                     onUserException(Constant.ACCOUNT_CONFLICT);
                 } else if (error == EMError.SERVER_SERVICE_RESTRICTED) {
                     onUserException(Constant.ACCOUNT_FORBIDDEN);

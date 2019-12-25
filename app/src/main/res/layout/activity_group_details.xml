@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        android:background="@color/top_bar_normal_bg"
+        android:background="@color/top_red"
         android:gravity="center_vertical" >
 
         <LinearLayout
@@ -18,11 +18,11 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_30"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="9dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/back_left" />
+                android:src="@drawable/ease_mm_title_back" />
         </LinearLayout>
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_16" />
 
         <ProgressBar
             android:id="@+id/progressBar"
