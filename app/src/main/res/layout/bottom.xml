@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
+    android:background="@mipmap/bottom_bg"
     android:paddingBottom="@dimen/dp_2"
     android:orientation="horizontal">
 
@@ -18,8 +19,8 @@
 
         <ImageButton
             android:id="@+id/home_ima"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/home_icon_bg"/>
 
         <TextView
@@ -40,12 +41,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_vertical"
+        android:paddingTop="@dimen/dp_2"
         android:layout_weight="1">
 
         <ImageButton
             android:id="@+id/msg_ima"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@drawable/msg_icon_bg"/>
         <TextView
@@ -83,8 +85,8 @@
 
         <ImageButton
             android:id="@+id/contacts_ima"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/contacts_icon_bg"/>
         <TextView
             android:id="@+id/contacts_t"
@@ -107,8 +109,8 @@
 
         <ImageButton
             android:id="@+id/my_ima"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/my_icon_bg"/>
         <TextView
             android:id="@+id/my_t"

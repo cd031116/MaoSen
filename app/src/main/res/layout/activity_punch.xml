@@ -316,7 +316,7 @@
                     android:id="@+id/gps_t"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GPS定位开关没有打开"
+                    android:text="GPS定位开关没有打开,请打开"
                     android:gravity="center"
                     android:visibility="gone"
                     android:textColor="#ef7c78"/>

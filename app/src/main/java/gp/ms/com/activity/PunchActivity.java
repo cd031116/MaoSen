@@ -450,8 +450,8 @@ public class PunchActivity extends BaseActivity implements View.OnClickListener 
     private void showNoGps(){
         daka_t.setText("无法打卡");
         daka_xt.setText("无法打卡");
-        gps_t.setVisibility(View.VISIBLE);
         gps_s.setVisibility(View.VISIBLE);
+        gps_t.setVisibility(View.GONE);
         hint_one.setVisibility(View.GONE);
         hint_two.setVisibility(View.GONE);
         daka_l.setBackgroundResource(R.drawable.gray_cirel);

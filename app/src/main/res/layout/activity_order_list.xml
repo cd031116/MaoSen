@@ -35,8 +35,8 @@
 
             <ImageView
                 android:id="@+id/top_image"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:clickable="false"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ease_mm_title_back" />
@@ -108,12 +108,14 @@
                 android:layout_gravity="right|center_vertical"
                 android:gravity="center"
                 android:textColor="@android:color/white"
+                android:text="搜索"
+                android:visibility="gone"
                 android:textSize="@dimen/sp_16" />
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="@dimen/dp_25"
-                android:layout_height="@dimen/dp_25"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:background="@mipmap/select_icon"
                 android:gravity="center"
                 android:visibility="visible" />

@@ -83,15 +83,15 @@ public class ContactsFragment extends EaseContactListFragment {
     @SuppressWarnings("unchecked")
     @Override
     protected void setUpView() {
-        titleBar.setRightImageResource(R.drawable.em_add);
-        titleBar.setRightLayoutClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(getActivity(), AddContactActivity.class));
-                NetUtils.hasDataConnection(getActivity());
-            }
-        });
+//        titleBar.setRightImageResource(R.drawable.em_add);
+//        titleBar.setRightLayoutClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+////                startActivity(new Intent(getActivity(), AddContactActivity.class));
+//                NetUtils.hasDataConnection(getActivity());
+//            }
+//        });
         //设置联系人数据
         Map<String, EaseUser> m = ChatHelper.getInstance().getContactList();
         if (m instanceof Hashtable<?, ?>) {
