@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources  xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
 
     <string name="text_ack_msg">Read</string>
     <string name="text_delivered_msg">Delivered</string>
@@ -19,6 +20,14 @@
     <string name="move_up_to_cancel">Finger up to cancel sending</string>
     <string name="release_to_cancel">Finger release to cancel sending</string>
     <string name="send_fail">Send failed</string>
+    <string name="add_public_chat_room">添加聊天室</string>
+    <string name="Sync_Groups_From_Server">从服务器下载群聊信息</string>
+    <string name="update_contact_list">更新联系人列表</string>
+    <string name="update_black_list">更新黑名单</string>
+    <string name="update_groups">更新群聊</string>
+    <string name="update_contact_list_failed">更新联系人列表失败</string>
+    <string name="update_black_list_failed">更新黑名单失败</string>
+    <string name="update_groups_failed">更新群聊失败</string>
     <string name="delete_message">Delete message</string>
     <string name="delete_conversation_messages">Delete conversation and messages</string>
     <string name="delete_conversation">Delete conversation</string>
