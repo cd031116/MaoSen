@@ -51,7 +51,6 @@
                         android:layout_height="wrap_content"
                         android:text="考勤规则"
                         android:textColor="@color/green_5FC4DF"
-
                         android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>
@@ -68,6 +67,8 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="@color/green_5FC4DF"
+                    android:drawableRight="@mipmap/arrow_up"
+                    android:drawablePadding="@dimen/dp_5"
                     android:textSize="@dimen/sp_14" />
 
             </LinearLayout>

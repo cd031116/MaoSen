@@ -323,4 +323,11 @@
     <string name="alert_during_typing">正在输入 &#8230;</string>
     <string name="title_msg_typing">单聊消息显示\"正在输入\"</string>
     <string name="user_forbidden">用户被服务器限制连接</string>
+    <string name="sun">日</string>
+    <string name="mon">一</string>
+    <string name="tue">二</string>
+    <string name="wed">三</string>
+    <string name="thu">四</string>
+    <string name="fri">五</string>
+    <string name="sat">六</string>
 </resources>
