@@ -1,5 +1,4 @@
-<resources  xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name" translatable="false">茂森云控</string>
 
     <string name="title_live" translatable="false">互动视频</string>
@@ -236,4 +235,10 @@
         <item>申</item>
 
     </string-array>
+
+    <string name="doodle_clear_screen">clear_screen</string>
+    <string name="doodle_cant_undo_after_clearing">cant_undo_after_clearing</string>
+    <string name="doodle_edit_mode">edit_mode</string>
+    <string name="doodle_saving_picture">saving_picture</string>
+    <string name="doodle_save">save</string>
 </resources>

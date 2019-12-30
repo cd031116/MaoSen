@@ -24,6 +24,7 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <!-- 悬浮窗权限 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -45,8 +46,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <activity android:name=".activity.StartUpActivity">
             <intent-filter>
@@ -62,7 +64,7 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
@@ -110,15 +112,16 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
-        <activity android:name=".chat.ui.VideoCallActivity"
+        <activity
+            android:name=".chat.ui.VideoCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
-
-        <activity android:name=".activity.OrderListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.OrderListActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 地图 -->
         <activity
@@ -136,7 +139,6 @@
             android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
-
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
             android:screenOrientation="portrait"
@@ -165,7 +167,6 @@
             </intent-filter>
         </receiver>
 
-
         <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
@@ -193,7 +194,10 @@
             </intent-filter>
         </receiver>
 
-
+        <activity
+            android:name=".editpic.DoodleActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|navigation|keyboard" />
+        <activity android:name=".activity.PicOrderActivity"></activity>
     </application>
 
 </manifest>

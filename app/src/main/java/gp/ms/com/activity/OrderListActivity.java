@@ -14,12 +14,18 @@ import android.widget.TextView;
 
 import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
+import gp.ms.com.widget.EditPicDialog;
+import gp.ms.com.widget.SureDialog;
 
+/**
+ * 订单列表
+ * */
 public class OrderListActivity extends BaseActivity implements View.OnClickListener{
     private LinearLayout top_left;
     private TextView top_right_text;
     private EditText search_edt;
     private ImageView sImage;
+    private ImageView add_image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +42,11 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         search_edt=findViewById(R.id.search_edt);
         top_right_text=findViewById(R.id.top_right_text);
         sImage=findViewById(R.id.image);
+        add_image=findViewById(R.id.add_image);
         top_left.setOnClickListener(this);
         top_right_text.setOnClickListener(this);
         sImage.setOnClickListener(this);
+        add_image.setOnClickListener(this);
     }
 
     @Override
@@ -80,11 +88,38 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                 search_edt.setText("");
                 search_edt.clearFocus();
                 break;
+            //筛选
             case R.id.image:
 
-
-
+                break;
+            case R.id.add_image:
+                showdialog();
                 break;
         }
     }
+
+
+
+    private void showdialog() {
+        final EditPicDialog dialog = new EditPicDialog(OrderListActivity.this);
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnclickCallBack(new EditPicDialog.OnclickCallBack() {
+            @Override
+            public void onCallBack(int position) {
+                if (position==0){
+
+                }else {
+
+                    
+                }
+            }
+        });
+    }
+
+
+
+
+
+
 }
