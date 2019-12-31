@@ -20,6 +20,7 @@
         android:textColor="@color/white"
         android:gravity="center"
         android:text="提示"
+        android:textSize="@dimen/sp_12"
         android:background="@color/dialog_red"
         android:padding="@dimen/dp_10"/>
 

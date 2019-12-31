@@ -29,7 +29,7 @@ public class EditPicDialog extends BaseDialog<SureDialog> {
         widthScale(0.75f);
         dimEnabled(true);
         // dismissAnim(this, new ZoomOutExit());
-        View inflate = View.inflate(context, R.layout.sure_dialog, null);
+        View inflate = View.inflate(context, R.layout.dia_edit_pic, null);
         cancel = inflate.findViewById(R.id.cance_t);
         custom_t=inflate.findViewById(R.id.custom_t);
         pic_t=inflate.findViewById(R.id.pic_t);
@@ -37,7 +37,8 @@ public class EditPicDialog extends BaseDialog<SureDialog> {
     }
 
     @Override
-    public void setUiBeforShow() {
+    public void onViewCreated(View inflate) {
+        super.onViewCreated(inflate);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +58,11 @@ public class EditPicDialog extends BaseDialog<SureDialog> {
             }
             dismiss();
         });
+    }
+
+    @Override
+    public void setUiBeforShow() {
+
 
     }
 

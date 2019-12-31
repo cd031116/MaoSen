@@ -32,10 +32,6 @@ public class PicOrderActivity extends TitleBaseActivity implements View.OnClickL
     private  String mPath="";
     private String edtPatn="";
     public static final int REQ_CODE_DOODLE = 101;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected void initActivityContent() {
