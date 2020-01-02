@@ -29,7 +29,7 @@ public class ContextMenuActivity extends ChatBaseActivity {
     public static final int RESULT_CODE_DELETE = 2;
     public static final int RESULT_CODE_FORWARD = 3;
 	public static final int RESULT_CODE_RECALL = 4;
-    
+	public static final int RESULT_CODE_SAVE = 5;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,5 +92,13 @@ public class ContextMenuActivity extends ChatBaseActivity {
 		setResult(RESULT_CODE_RECALL);
 		finish();
 	}
-	
+
+
+	public void saveImg(View view){
+		setResult(RESULT_CODE_SAVE);
+		finish();
+	}
+
+
+
 }

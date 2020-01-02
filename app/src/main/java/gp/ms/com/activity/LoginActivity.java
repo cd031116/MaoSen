@@ -2,22 +2,20 @@ package gp.ms.com.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.StatusBarUtil;
 
 import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
 import gp.ms.com.chat.ChatHelper;
 import gp.ms.com.http.utils.ToastUtils;
-import gp.ms.com.utils.StatusBarUtil;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private Button login;
@@ -59,8 +57,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.login:
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+                ImLogin("17688986810","123456");
+                showAlert("..正在登陆..");
                 break;
 
             case R.id.no_acount:
@@ -83,8 +81,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         EMClient.getInstance().login(userName,password,new EMCallBack() {//回调
             @Override
             public void onSuccess() {
+                dismissAlert();
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             }
 
             @Override
@@ -94,8 +95,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
             @Override
             public void onError(int code, String message) {
+                dismissAlert();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             }
         });
     }
-
 }

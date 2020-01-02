@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hyphenate.easeui.utils.StatusBarUtil;
+
 import gp.ms.com.R;
 import gp.ms.com.base.BaseActivity;
-import gp.ms.com.utils.StatusBarUtil;
 
 public class RegistActivity extends BaseActivity implements View.OnClickListener {
     TextView submit;

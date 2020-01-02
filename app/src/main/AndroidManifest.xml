@@ -197,7 +197,21 @@
         <activity
             android:name=".editpic.DoodleActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|navigation|keyboard" />
-        <activity android:name=".activity.PicOrderActivity"></activity>
+        <activity android:name=".activity.PicOrderActivity" />
+        <activity
+            android:name=".activity.GroupsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.NewGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.GroupPickContactsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

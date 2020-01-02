@@ -1,44 +1,61 @@
 package gp.ms.com.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
+
+import com.hyphenate.EMCallBack;
+import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
+import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.model.EaseDingMessageHelper;
+import com.hyphenate.easeui.model.EaseImageCache;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.ui.EaseChatFragment.EaseChatFragmentHelper;
 import com.hyphenate.easeui.ui.EaseDingMsgSendActivity;
+import com.hyphenate.easeui.ui.EaseShowBigImageActivity;
+import com.hyphenate.easeui.utils.EaseImageUtils;
+import com.hyphenate.easeui.utils.EaseLoadLocalBigImgTask;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
 import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.EasyUtils;
+import com.hyphenate.util.ImageUtils;
 import com.hyphenate.util.PathUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.tools.ToastManage;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +74,14 @@ import gp.ms.com.chat.widget.ChatRowLivePresenter;
 import gp.ms.com.chat.widget.EaseChatRecallPresenter;
 import gp.ms.com.chat.widget.EaseChatVoiceCallPresenter;
 import gp.ms.com.utils.Constant;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * 聊天界面fragment
  * */
@@ -161,6 +186,31 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CONTEXT_MENU) {
             switch (resultCode) {
+                case ContextMenuActivity.RESULT_CODE_SAVE: // 保存
+                    EMImageMessageBody imgBody = (EMImageMessageBody) contextMenuMessage.getBody();
+                    File file = new File(imgBody.getLocalUrl());
+                    if (file.exists()) {
+                        Uri uri = Uri.fromFile(file);
+                        if (uri != null && new File(uri.getPath()).exists()) {
+                            EMLog.d(TAG, "showbigimage file exists. directly show it");
+                            DisplayMetrics metrics = new DisplayMetrics();
+                            getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                            // int screenWidth = metrics.widthPixels;
+                            // int screenHeight =metrics.heightPixels;
+                             Bitmap   bitmap = EaseImageCache.getInstance().get(uri.getPath());
+                            if (bitmap == null) {
+                                savePic(uri);
+                            } else {
+                                boolean  issave=EaseImageUtils.saveImageToGallery(getActivity(),bitmap);
+                                if (issave){
+                                    ToastManage.s(getActivity(),"保存成功");
+                                }
+                            }
+                        }
+                    }else {
+                        downloadImage(imgBody.getLocalUrl(),contextMenuMessage.getMsgId());
+                    }
+                    break;
             case ContextMenuActivity.RESULT_CODE_COPY: // copy
                 clipboard.setPrimaryClip(ClipData.newPlainText(null, 
                         ((EMTextMessageBody) contextMenuMessage.getBody()).getMessage()));
@@ -509,4 +559,92 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     }
 
+
+
+    /**
+     * download image
+     *
+     * @param
+     */
+    @SuppressLint("NewApi")
+    private void downloadImage(final String localFilePath,String msgId) {
+        if (TextUtils.isEmpty(localFilePath)){
+            ToastManage.s(getActivity(),"保存失败,图片路径不存在");
+            return;
+        }
+        File temp = new File(localFilePath);
+        final String tempPath = temp.getParent() + "/temp_" + temp.getName();
+        final EMCallBack callback = new EMCallBack() {
+            public void onSuccess() {
+                EMLog.e(TAG, "onSuccess" );
+               getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new File(tempPath).renameTo(new File(localFilePath));
+
+                        DisplayMetrics metrics = new DisplayMetrics();
+                        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                        int screenWidth = metrics.widthPixels;
+                        int screenHeight = metrics.heightPixels;
+                         Bitmap   bitmap = ImageUtils.decodeScaleImage(localFilePath, screenWidth, screenHeight);
+                        if (bitmap != null) {
+                            boolean  issave=EaseImageUtils.saveImageToGallery(getActivity(),bitmap);
+                            if (issave){
+                                ToastManage.s(getActivity(),"保存成功");
+                            }
+                        } else {
+                            ToastManage.s(getActivity(),"保存失败");
+                        }
+
+                    }
+                });
+            }
+
+            public void onError(final int error, String msg) {
+
+            }
+
+            public void onProgress(final int progress, String status) {
+
+            }
+        };
+        EMMessage msg = EMClient.getInstance().chatManager().getMessage(msgId);
+        msg.setMessageStatusCallback(callback);
+        EMLog.e(TAG, "downloadAttachement");
+        EMClient.getInstance().chatManager().downloadAttachment(msg);
+    }
+
+
+    private void  savePic(Uri uri){
+        Observable.create(new ObservableOnSubscribe<Bitmap>() {
+            @Override
+            public void subscribe(ObservableEmitter<Bitmap> emitter) {
+                Bitmap bitmap = ImageUtils.decodeScaleImage(uri.getPath(), ImageUtils.SCALE_IMAGE_WIDTH, ImageUtils.SCALE_IMAGE_HEIGHT);
+                emitter.onNext(bitmap);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Bitmap>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+                    @Override
+                    public void onNext(Bitmap activeCode) {
+                        if (null!=activeCode) {
+                            boolean  issave=EaseImageUtils.saveImageToGallery(getActivity(),activeCode);
+                            if (issave){
+                                ToastManage.s(getActivity(),"保存成功");
+                            }
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
 }

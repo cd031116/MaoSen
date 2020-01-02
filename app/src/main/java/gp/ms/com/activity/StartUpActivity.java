@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.utils.StatusBarUtil;
 import com.hyphenate.util.EasyUtils;
 
 import gp.ms.com.R;
@@ -16,7 +17,6 @@ import gp.ms.com.base.BaseActivity;
 import gp.ms.com.chat.ChatHelper;
 import gp.ms.com.chat.ui.VideoCallActivity;
 import gp.ms.com.chat.ui.VoiceCallActivity;
-import gp.ms.com.utils.StatusBarUtil;
 
 public class StartUpActivity extends BaseActivity {
     private LinearLayout main_line;

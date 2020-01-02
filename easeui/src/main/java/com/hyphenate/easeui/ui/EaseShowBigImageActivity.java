@@ -24,10 +24,12 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseImageCache;
+import com.hyphenate.easeui.utils.EaseImageUtils;
 import com.hyphenate.easeui.utils.EaseLoadLocalBigImgTask;
 import com.hyphenate.easeui.widget.photoview.EasePhotoView;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.ImageUtils;
+import com.luck.picture.lib.tools.ToastManage;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -40,6 +42,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -54,14 +57,14 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 	private String localFilePath;
 	private Bitmap bitmap;
 	private boolean isDownloaded;
-
+	private TextView save_t;
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.ease_activity_show_big_image);
 		super.onCreate(savedInstanceState);
-
 		image = (EasePhotoView) findViewById(R.id.image);
+		save_t=findViewById(R.id.save_t);
 		ProgressBar loadLocalPb = (ProgressBar) findViewById(R.id.pb_load_local);
 		default_res = getIntent().getIntExtra("default_image", R.drawable.ease_default_avatar);
 		Uri uri = getIntent().getParcelableExtra("uri");
@@ -97,7 +100,32 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 		image.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+				if (save_t.getVisibility()==View.VISIBLE){
+					save_t.setVisibility(View.GONE);
+				}else {
+					EaseShowBigImageActivity.this.finish();
+				}
+			}
+		});
+		image.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				if (save_t.getVisibility()==View.GONE){
+					save_t.setVisibility(View.VISIBLE);
+				}
+				return true;
+			}
+		});
+		save_t.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (null!=bitmap){
+					boolean  issave=EaseImageUtils.saveImageToGallery(EaseShowBigImageActivity.this,bitmap);
+					if (issave){
+						ToastManage.s(EaseShowBigImageActivity.this,"保存成功");
+					}
+
+				}
 			}
 		});
 	}
@@ -105,7 +133,7 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 	/**
 	 * download image
 	 * 
-	 * @param remoteFilePath
+	 * @param
 	 */
 	@SuppressLint("NewApi")
 	private void downloadImage(final String msgId) {

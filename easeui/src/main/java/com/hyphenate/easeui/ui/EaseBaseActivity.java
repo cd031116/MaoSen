@@ -17,6 +17,7 @@ package com.hyphenate.easeui.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.hyphenate.easeui.EaseUI;
+import com.hyphenate.easeui.utils.StatusBarUtil;
 
 @SuppressLint({"NewApi", "Registered"})
 public class EaseBaseActivity extends FragmentActivity {
@@ -44,6 +46,7 @@ public class EaseBaseActivity extends FragmentActivity {
             }
         }
         inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        setStatusBar();
     }
     
 
@@ -69,5 +72,9 @@ public class EaseBaseActivity extends FragmentActivity {
      */
     public void back(View view) {
         finish();
+    }
+
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this,Color.parseColor("#fc1645"),0);
     }
 }

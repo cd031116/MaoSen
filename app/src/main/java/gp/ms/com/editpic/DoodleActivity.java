@@ -48,7 +48,9 @@ import gp.ms.com.editpic.core.IDoodleTouchDetector;
 import gp.ms.com.editpic.dialog.ColorPickerDialog;
 import gp.ms.com.editpic.dialog.DialogController;
 import gp.ms.com.editpic.imagepicker.ImageSelectorView;
-
+/**
+ * 图片编辑
+ * */
 public class DoodleActivity extends AppCompatActivity {
     public static final String TAG = "Doodle";
     public final static int DEFAULT_MOSAIC_SIZE = 20; // 默认马赛克大小

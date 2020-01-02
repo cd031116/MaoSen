@@ -1020,7 +1020,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             selectList.clear();
         }
         // 单独拍照
-        PictureSelector.create(getActivity())
+        PictureSelector.create(this)
                 .openCamera(PictureMimeType.ofImage())
                 .compress(true)
                 .forResult(PictureConfig.REQUEST_CAMERA);
@@ -1033,7 +1033,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         if (null != selectList) {
             selectList.clear();
         }
-        PictureSelector.create(getActivity())
+        PictureSelector.create(this)
                 .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 .theme(R.style.picture_QQ_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
                 .maxSelectNum(9)// 最大图片选择数量

@@ -23,6 +23,7 @@
         android:id="@+id/chat_room_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:contactItemImage="@drawable/em_groups_icon"
         app:contactItemName="@string/chat_room" />
 
@@ -30,6 +31,7 @@
         android:id="@+id/conference_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:contactItemImage="@drawable/em_chat_video_call_normal"
         app:contactItemName="@string/voice_and_video_conference" />
 

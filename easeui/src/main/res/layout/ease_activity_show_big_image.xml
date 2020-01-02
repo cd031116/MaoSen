@@ -19,4 +19,17 @@
         android:visibility="gone" />
 
 
+    <TextView
+        android:id="@+id/save_t"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="#333333"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"/>
+
+
 </RelativeLayout>

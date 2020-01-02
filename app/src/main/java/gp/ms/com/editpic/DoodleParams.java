@@ -126,7 +126,6 @@ public class DoodleParams implements Parcelable {
         dest.writeInt(mPaintColor);
         dest.writeInt(mSupportScaleItem ? 1 : 0);
         dest.writeInt(mOptimizeDrawing ? 1 : 0);
-
     }
 
     @Override

@@ -241,4 +241,6 @@
     <string name="doodle_edit_mode">edit_mode</string>
     <string name="doodle_saving_picture">saving_picture</string>
     <string name="doodle_save">save</string>
+    <string name="join_need_owner_approval">need_owner_approval</string>
+    <string name="invite_join_group">invite_join_group：</string>
 </resources>

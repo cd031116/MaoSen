@@ -6,9 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import gp.ms.com.R;
-import gp.ms.com.activity.MainActivity;
-import gp.ms.com.utils.StatusBarUtil;
+import com.hyphenate.easeui.utils.StatusBarUtil;
+
 import gp.ms.com.widget.LodingDialog;
 
 public abstract class BaseActivity extends AppCompatActivity {
