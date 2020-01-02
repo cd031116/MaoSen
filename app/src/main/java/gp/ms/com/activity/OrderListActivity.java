@@ -65,16 +65,30 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                 return false;
             }
         });
-        search_edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+
+        search_edt.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){//获得焦点
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    String strs=s.toString();
+                if(!TextUtils.isEmpty(strs)){//获得焦点
                     top_right_text.setVisibility(View.VISIBLE);
                     sImage.setVisibility(View.GONE);
                 }else{//失去焦点
                     top_right_text.setVisibility(View.GONE);
                     sImage.setVisibility(View.VISIBLE);
                 }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }

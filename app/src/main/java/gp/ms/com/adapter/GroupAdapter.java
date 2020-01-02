@@ -103,7 +103,7 @@ public class GroupAdapter extends ArrayAdapter<EMGroup> {
 			if (convertView == null) {
 				convertView = inflater.inflate(R.layout.em_row_group, parent, false);
 			}
-			((TextView) convertView.findViewById(R.id.name)).setText(getItem(position - 3).getGroupName());
+			((TextView) convertView.findViewById(R.id.name)).setText(getItem(position - 2).getGroupName());
 
 		}
 

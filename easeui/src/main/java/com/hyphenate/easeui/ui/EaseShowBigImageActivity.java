@@ -27,6 +27,7 @@ import com.hyphenate.easeui.model.EaseImageCache;
 import com.hyphenate.easeui.utils.EaseImageUtils;
 import com.hyphenate.easeui.utils.EaseLoadLocalBigImgTask;
 import com.hyphenate.easeui.widget.photoview.EasePhotoView;
+import com.hyphenate.easeui.widget.photoview.PhotoViewAttacher;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.ImageUtils;
 import com.luck.picture.lib.tools.ToastManage;
@@ -39,8 +40,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +61,7 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 	private Bitmap bitmap;
 	private boolean isDownloaded;
 	private TextView save_t;
+	private LinearLayout bottom_l;
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 		super.onCreate(savedInstanceState);
 		image = (EasePhotoView) findViewById(R.id.image);
 		save_t=findViewById(R.id.save_t);
+		bottom_l=findViewById(R.id.bottom_l);
 		ProgressBar loadLocalPb = (ProgressBar) findViewById(R.id.pb_load_local);
 		default_res = getIntent().getIntExtra("default_image", R.drawable.ease_default_avatar);
 		Uri uri = getIntent().getParcelableExtra("uri");
@@ -97,21 +102,22 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 			image.setImageResource(default_res);
 		}
 
-		image.setOnClickListener(new OnClickListener() {
+		image.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
 			@Override
-			public void onClick(View v) {
-				if (save_t.getVisibility()==View.VISIBLE){
-					save_t.setVisibility(View.GONE);
+			public void onViewTap(View view, float x, float y) {
+				if (bottom_l.getVisibility()==View.VISIBLE){
+					bottom_l.setVisibility(View.GONE);
 				}else {
 					EaseShowBigImageActivity.this.finish();
 				}
 			}
 		});
+
 		image.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				if (save_t.getVisibility()==View.GONE){
-					save_t.setVisibility(View.VISIBLE);
+				if (bottom_l.getVisibility()==View.GONE){
+					bottom_l.setVisibility(View.VISIBLE);
 				}
 				return true;
 			}

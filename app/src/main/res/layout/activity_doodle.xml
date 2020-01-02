@@ -18,7 +18,8 @@
             android:id="@+id/doodle_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_50"/>
+            android:layout_marginTop="@dimen/dp_50"
+            android:paddingBottom="@dimen/dp_50"/>
 
         <FrameLayout
             android:id="@+id/doodle_panel"

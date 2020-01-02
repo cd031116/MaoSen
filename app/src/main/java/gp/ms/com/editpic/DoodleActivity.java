@@ -5,13 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -34,7 +35,6 @@ import java.util.Map;
 
 import cn.forward.androids.utils.ImageUtils;
 import cn.forward.androids.utils.LogUtil;
-import cn.forward.androids.utils.StatusBarUtil;
 import cn.forward.androids.utils.Util;
 import gp.ms.com.R;
 import gp.ms.com.editpic.core.IDoodle;
@@ -158,7 +158,7 @@ public class DoodleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setStatusBarTranslucent(this, true, false);
+
         if (mDoodleParams == null) {
             mDoodleParams = getIntent().getExtras().getParcelable(KEY_PARAMS);
         }
@@ -188,6 +188,7 @@ public class DoodleActivity extends AppCompatActivity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_doodle);
+        com.hyphenate.easeui.utils.StatusBarUtil.setColor(this,Color.parseColor("#fc1645"),0);
         mFrameLayout = (FrameLayout) findViewById(R.id.doodle_container);
 
         /*

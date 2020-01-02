@@ -22,6 +22,7 @@ import java.util.Map;
 import gp.ms.com.R;
 import gp.ms.com.activity.ChatActivity;
 import gp.ms.com.activity.GroupsActivity;
+import gp.ms.com.activity.NewFriendsMsgActivity;
 import gp.ms.com.chat.ChatHelper;
 import gp.ms.com.chat.db.InviteMessgeDao;
 import gp.ms.com.chat.db.UserDao;
@@ -165,7 +166,7 @@ public class ContactsFragment extends EaseContactListFragment {
             switch (v.getId()) {
                 case R.id.application_item:
                     // 进入申请与通知页面
-//                    startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
+                    startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
                     break;
                 case R.id.group_item:
                     // 进入群聊列表页面

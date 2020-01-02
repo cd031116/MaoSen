@@ -28,6 +28,7 @@
  *******************************************************************************/
 package com.hyphenate.easeui.widget.photoview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -39,6 +40,7 @@ import com.hyphenate.easeui.widget.photoview.PhotoViewAttacher.OnMatrixChangedLi
 import com.hyphenate.easeui.widget.photoview.PhotoViewAttacher.OnPhotoTapListener;
 import com.hyphenate.easeui.widget.photoview.PhotoViewAttacher.OnViewTapListener;
 
+@SuppressLint("AppCompatCustomView")
 public class EasePhotoView extends ImageView implements IPhotoView {
 
 	private final PhotoViewAttacher mAttacher;

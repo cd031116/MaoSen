@@ -47,7 +47,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, VersionedGestureDetector.OnGestureListener,
+public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, VersionedGestureDetector.OnGestureListener,
 		GestureDetector.OnDoubleTapListener, ViewTreeObserver.OnGlobalLayoutListener {
 
 	static final String LOG_TAG = "PhotoViewAttacher";
@@ -202,7 +202,7 @@ class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, VersionedGe
 	 * when the ImageView is no longer used. A good example is from
 	 * {@link View#onDetachedFromWindow()} or from
 	 * {@link android.app.Activity#onDestroy()}. This is automatically called if
-	 * you are using {@link EasePhotoView.co.senab.photoview.PhotoView}.
+	 * you are using {@link EasePhotoView}.
 	 */
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
